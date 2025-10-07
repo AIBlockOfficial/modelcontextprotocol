@@ -8,7 +8,7 @@ __pycache__/
 .env
 
 # uv
-uv.lock
+# keep uv.lock committed for Railpack build determinism
 
 # IDE
 .vscode/

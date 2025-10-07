@@ -1,0 +1,12 @@
+aiblock>=0.2.9
+python-dotenv>=1.0.1
+uvicorn>=0.30.0
+mcp
+pydantic>=2.10.0
+
+[dev]
+ruff>=0.5
+mypy>=1.10
+pytest>=8
+pytest-cov>=5
+httpx>=0.28

@@ -1,16 +1,6 @@
 {
-  "steps": {
-    "install": {
-      "commands": [
-        "python -m pip install --upgrade pip",
-        "curl -LsSf https://astral.sh/uv/install.sh | sh",
-        "cd \"${RAILWAY_SOURCE_DIR:-.}\" 2>/dev/null || cd /workspace 2>/dev/null || cd /app 2>/dev/null || true",
-        "UV_NO_DEV=1 $HOME/.local/bin/uv sync"
-      ]
-    }
-  },
   "deploy": {
-    "startCommand": "$HOME/.local/bin/uv run uvicorn aiblock_mcp.server:app --host 0.0.0.0 --port ${PORT:-8000}"
+    "startCommand": "uv run uvicorn aiblock_mcp.server:app --host 0.0.0.0 --port ${PORT:-8000}"
   }
 }
 

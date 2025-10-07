@@ -1,14 +1,6 @@
 {
-  "steps": {
-    "install": {
-      "commands": [
-        "curl -LsSf https://astral.sh/uv/install.sh | sh",
-        "UV_NO_DEV=1 $HOME/.local/bin/uv sync"
-      ]
-    }
-  },
   "deploy": {
-    "startCommand": "$HOME/.local/bin/uv run uvicorn aiblock_mcp.server:app --host 0.0.0.0 --port ${PORT:-8000}"
+    "startCommand": "/app/.venv/bin/uvicorn aiblock_mcp.server:app --host 0.0.0.0 --port ${PORT:-8000}"
   }
 }
 

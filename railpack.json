@@ -3,13 +3,13 @@
     "install": {
       "commands": [
         "python -m pip install --upgrade pip",
-        "python -m pip install uv",
-        "UV_NO_DEV=1 uv sync"
+        "curl -LsSf https://astral.sh/uv/install.sh | sh",
+        "UV_NO_DEV=1 $HOME/.local/bin/uv sync"
       ]
     }
   },
   "deploy": {
-    "startCommand": "uv run uvicorn aiblock_mcp.server:app --host 0.0.0.0 --port ${PORT:-8000}"
+    "startCommand": "$HOME/.local/bin/uv run uvicorn aiblock_mcp.server:app --host 0.0.0.0 --port ${PORT:-8000}"
   }
 }
 

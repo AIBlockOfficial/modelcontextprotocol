@@ -30,71 +30,71 @@ Use the following as guidance for implementing MCP tools (function names are sug
 - Return outputs that mirror the AIBlock SDK payloads exactly (no field renaming or reshaping). Include all fields the SDK returns.
 - Log request ID and tool name for observability (added later).
 
-1) wallet.generate_seed_phrase
+1) generate-seed-phrase
 - Input: `{ entropyBits?: number }` (optional; default per SDK)
 - Output: Mirror SDK structure exactly.
 - Errors: `INVALID_ARGUMENT`, `INTERNAL`
 - Notes: Do not log or persist seed phrase.
 
-2) wallet.generate_keypair
+2) generate-keypair
 - Input: `{ seedPhrase?: string }` (optional; if omitted, generate ephemeral one)
 - Output: Mirror SDK structure exactly.
 - Errors: `INVALID_ARGUMENT`, `INTERNAL`
 - Notes: Only include `secretKey` in explicitly privileged contexts; by default, omit. Prefer returning an opaque `keyId` in future.
 
-3) wallet.get_balance
+3) get-balance
 - Input: `{}` (current wallet)
 - Output: Mirror SDK structure exactly.
 - Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `UPSTREAM_UNAVAILABLE`
 - SDK mapping: `BlockchainClient.get_balance(address)`
 
-4) wallet.create_item_asset
+4) create-item-asset
 - Input: `{ keyId?: string, seedPhrase?: string, name: string, metadata?: object }`
 - Output: Mirror SDK structure exactly.
 - Errors: `UNAUTHENTICATED` (if missing signing material), `INVALID_ARGUMENT`, `UPSTREAM_UNAVAILABLE`, `FAILED_PRECONDITION`
 - Notes: Either use `seedPhrase` (dev) or a managed `keyId` (prod). Ensure idempotency keys if creating server-side.
 
-5) wallet.sign_transaction
+5) sign-transaction
 - Input: `{ keyId?: string, seedPhrase?: string, transaction: object }`
 - Output: Mirror SDK structure exactly.
 - Errors: `UNAUTHENTICATED`, `INVALID_ARGUMENT`, `INTERNAL`
 
-6) blockchain.get_latest_block
+6) blockchain-get-latest-block
 - Input: `{}`
 - Output: Mirror SDK structure exactly.
 - Errors: `UPSTREAM_UNAVAILABLE`, `INTERNAL`
 - SDK mapping: `BlockchainClient.get_latest_block()`
 
-7) blockchain.get_block_by_number
+7) blockchain-get-block-by-number
 - Input: `{ height: number }`
 - Output: Mirror SDK structure exactly.
 - Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `UPSTREAM_UNAVAILABLE`
 - SDK mapping: `BlockchainClient.get_block_by_num(height)`
 
-8) blockchain.get_entry_by_hash
+8) blockchain-get-entry-by-hash
 - Input: `{ hash: string }`
 - Output: Mirror SDK structure exactly.
 - Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `UPSTREAM_UNAVAILABLE`
 - SDK mapping: `BlockchainClient.get_blockchain_entry(hash)`
-11) blockchain.get_transaction_by_hash
+11) get-transaction-by-hash
 - Input: `{ tx_hash: string }`
 - Output: Mirror SDK structure exactly.
 - Errors: `INVALID_ARGUMENT`, `NOT_FOUND`, `UPSTREAM_UNAVAILABLE`
 - SDK mapping: `BlockchainClient.get_transaction_by_hash(tx_hash)`
 
-12) blockchain.fetch_transactions
+12) fetch-transactions
 - Input: `{ tx_hashes: string[] }`
 - Output: Mirror SDK structure exactly.
 - Errors: `INVALID_ARGUMENT`, `UPSTREAM_UNAVAILABLE`
 - SDK mapping: `BlockchainClient.fetch_transactions(tx_hashes)`
 
-9) blockchain.get_total_supply
+9) get-total-supply
 - Input: `{}`
 - Output: Mirror SDK structure exactly.
 - Errors: `UPSTREAM_UNAVAILABLE`
 - SDK mapping: `BlockchainClient.get_total_supply()`
 
-10) blockchain.get_issued_supply
+10) get-issued-supply
 - Input: `{}`
 - Output: Mirror SDK structure exactly.
 - Errors: `UPSTREAM_UNAVAILABLE`

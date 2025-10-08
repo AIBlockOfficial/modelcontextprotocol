@@ -34,11 +34,16 @@ References
 - **Action (guidance):**
   - Launch the official MCP Inspector.
   - Configure a connection to `http://localhost:8000/mcp` (Streamable HTTP).
-  - Confirm tool listing shows: `wallet.generate_seed_phrase`, `wallet.generate_keypair`, `wallet.get_balance`, `wallet.fetch_balance`, `blockchain.get_latest_block`, `blockchain.get_block_by_number`, `blockchain.get_entry_by_hash`, `blockchain.get_total_supply`, `blockchain.get_issued_supply`, `blockchain.get_transaction_by_hash`, `blockchain.fetch_transactions`, plus `health`, `version`.
+  - Confirm tool listing shows: `generate-seed-phrase`, `generate-keypair`, `get-balance`, `fetch-balance`, `get-latest-block`, `get-block-by-number`, `get-entry-by-hash`, `get-total-supply`, `get-issued-supply`, `get-transaction-by-hash`, `fetch-transactions`, plus `health`, `version`.
   - Confirm prompts listing includes registered prompt names (e.g., `prompt.block.explain_header`, `prompt.tx.explain`).
   - Fetch a prompt and verify it returns a list of one user message with rendered content.
   - Execute sample calls and verify responses and headers (e.g., `Mcp-Session-Id`).
   - For dev auth, set `MCP_DEV_AUTH_TOKEN` on server and provide `Authorization: Bearer <token>` in Inspector requests when testing privileged tools.
+
+Deployment sanity (Railway)
+- Build: logs show `uv sync` with pyproject/uv.lock detected by Railpack.
+- Start: command uses `/app/.venv/bin/uvicorn ... --port $PORT`. No `uv not found`.
+- Runtime: tools list, prompts list/get work via Inspector.
 
 ---
 

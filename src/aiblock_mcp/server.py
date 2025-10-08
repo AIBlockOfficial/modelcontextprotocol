@@ -37,7 +37,7 @@ def version() -> dict:
     return version_impl()
 
 
-@mcp.tool(name="blockchain.get_latest_block")
+@mcp.tool(name="get-latest-block")
 def blockchain_get_latest_block() -> dict:
     cfg = get_config()
     client = create_blockchain_client(cfg)
@@ -45,21 +45,21 @@ def blockchain_get_latest_block() -> dict:
     return resp.model_dump()
 
 
-@mcp.tool(name="wallet.get_balance")
+@mcp.tool(name="get-balance")
 def wallet_get_balance() -> dict:
     print("[tool] wallet.get_balance invoked", flush=True)
     resp = wallet_balance()
     return resp.model_dump()
 
 
-@mcp.tool(name="wallet.fetch_balance")
+@mcp.tool(name="fetch-balance")
 def wallet_fetch_balance_tool(addresses: list[str]) -> dict:
     print(f"[tool] wallet.fetch_balance invoked with addresses={addresses}", flush=True)
     resp = wallet_fetch_balance(addresses)
     return resp.model_dump()
 
 
-@mcp.tool(name="blockchain.get_total_supply")
+@mcp.tool(name="get-total-supply")
 def blockchain_get_total_supply() -> dict:
     cfg = get_config()
     client = create_blockchain_client(cfg)
@@ -67,7 +67,7 @@ def blockchain_get_total_supply() -> dict:
     return resp.model_dump()
 
 
-@mcp.tool(name="blockchain.get_issued_supply")
+@mcp.tool(name="get-issued-supply")
 def blockchain_get_issued_supply() -> dict:
     cfg = get_config()
     client = create_blockchain_client(cfg)
@@ -75,7 +75,7 @@ def blockchain_get_issued_supply() -> dict:
     return resp.model_dump()
 
 
-@mcp.tool(name="blockchain.get_block_by_number")
+@mcp.tool(name="get-block-by-number")
 def blockchain_get_block_by_number(height: int) -> dict:
     cfg = get_config()
     client = create_blockchain_client(cfg)
@@ -83,7 +83,7 @@ def blockchain_get_block_by_number(height: int) -> dict:
     return resp.model_dump()
 
 
-@mcp.tool(name="blockchain.get_entry_by_hash")
+@mcp.tool(name="get-entry-by-hash")
 def blockchain_get_entry_by_hash(hash: str) -> dict:  # noqa: A002
     cfg = get_config()
     client = create_blockchain_client(cfg)
@@ -91,7 +91,7 @@ def blockchain_get_entry_by_hash(hash: str) -> dict:  # noqa: A002
     return resp.model_dump()
 
 
-@mcp.tool(name="blockchain.get_transaction_by_hash")
+@mcp.tool(name="get-transaction-by-hash")
 def blockchain_get_transaction_by_hash(tx_hash: str) -> dict:
     cfg = get_config()
     client = create_blockchain_client(cfg)
@@ -99,7 +99,7 @@ def blockchain_get_transaction_by_hash(tx_hash: str) -> dict:
     return resp.model_dump()
 
 
-@mcp.tool(name="blockchain.fetch_transactions")
+@mcp.tool(name="fetch-transactions")
 def blockchain_fetch_transactions(tx_hashes: list[str]) -> dict:
     cfg = get_config()
     client = create_blockchain_client(cfg)
@@ -107,12 +107,12 @@ def blockchain_fetch_transactions(tx_hashes: list[str]) -> dict:
     return resp.model_dump()
 
 
-@mcp.tool(name="wallet.generate_seed_phrase")
+@mcp.tool(name="generate-seed-phrase")
 def wallet_generate_seed_phrase() -> dict:
     return gen_seed_impl()
 
 
-@mcp.tool(name="wallet.generate_keypair")
+@mcp.tool(name="generate-keypair")
 def wallet_generate_keypair(seedPhrase: Optional[str] = None) -> dict:  # noqa: N803 (external name)
     return gen_keypair_impl(seed_phrase=seedPhrase)
 

@@ -142,6 +142,47 @@ def _cors_wrapper(inner_app):
                 headers.append((b"access-control-expose-headers", b"Mcp-Session-Id, X-Request-Id"))
             await send(event)
 
+        # Friendly landing page for browsers (GET / or /mcp)
+        path = scope.get("path", "/")
+        method = scope.get("method", "GET")
+        if method in ("GET", "HEAD") and path in ("/", "/mcp"):
+            html = (
+                "<html><head><title>AIBlock MCP Server</title></head><body>"
+                "<h1>AIBlock MCP Server</h1>"
+                "<p>To use this service, connect with an MCP-compatible client (e.g., MCP Inspector).</p>"
+                "<p>Docs: <a href=\"https://modelcontextprotocol.io/\">Model Context Protocol</a></p>"
+                "</body></html>"
+            ).encode("utf-8")
+            start = {
+                "type": "http.response.start",
+                "status": 200,
+                "headers": [(b"content-type", b"text/html; charset=utf-8")],
+            }
+            await send_with_cors(start)
+            await send({"type": "http.response.body", "body": html})
+            return
+
+        # Handle clients posting without required Accept header
+        if method == "POST" and path in ("/", "/mcp"):
+            accept_header = None
+            for name, value in scope.get("headers", []):
+                if name.lower() == b"accept":
+                    accept_header = value.decode()
+                    break
+            if not accept_header or "text/event-stream" not in accept_header:
+                body = (
+                    b'{"ok":false,"message":"This endpoint speaks MCP Streamable HTTP. Use an MCP client.",'
+                    b'"docs":"https://modelcontextprotocol.io/"}'
+                )
+                start = {
+                    "type": "http.response.start",
+                    "status": 406,
+                    "headers": [(b"content-type", b"application/json")],
+                }
+                await send_with_cors(start)
+                await send({"type": "http.response.body", "body": body})
+                return
+
         # Handle preflight
         if scope.get("method") == "OPTIONS":
             start = {"type": "http.response.start", "status": 204, "headers": []}
